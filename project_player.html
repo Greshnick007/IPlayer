@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Модальное окно</title>
+	<link rel="stylesheet" href="styles/style.css">
+
+
+	<!--Следить за ссылкой до CSS-->
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><i class="fas fa-user"></i>Профиль</li>
+				<li><i class="fas fa-list-ul"></i>Список треков</li>
+				<li><i class="fas fa-tools"></i>Настройки</li>
+			</ul>
+			<div class="nav-background"></div>
+		</nav>
+	</header>
+	<div class="player">
+		<div class="player-form">
+			<div class="player-list">
+				<ul>
+					<!--Проигрывание песни по нажатию клавиши мыши (ЛКМ)-->
+					<li class="player-list-item" value="0"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="1"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="2"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="3"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="4"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="5"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="6"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+					<li class="player-list-item" value="7"><span>Название песни</span><i class="fas fa-chevron-right"></i></li>
+				</ul>
+				<button onclick="stop()">STOP</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="howler.js/src/howler.core.js"></script>
+	<script>
+		{
+			"use strict";
+
+			let tracks = [
+		      "C.C. CATCH - Strangers by Night.mp3",
+		      "AC_DC - Back In Black.mp3",
+		      "Аркадиас, Тотти Франческа - Художник.mp3",
+		      "Петлюра Виктор - Ты как солнце.mp3",
+		      "Комбинация - Модница.mp3",
+		      "butyrka_for_rostov.mp3",
+		      "Евгений Коновалов - Настя.mp3",
+         	  "Stas-Mihajlov-My-bezhim-ot-sebya.mp3"
+		    ];
+
+		    let listOfSongs = document.querySelectorAll(".player-list > ul > li");
+
+		    for (let i = 0; i < listOfSongs.length; i++) {
+		    	listOfSongs[i].children[0].innerText = tracks[i];
+		    }
+
+		    let idOfSound;
+    		let player;
+
+    		function broke() {
+				 /*for (let i = 0; i < listOfSongs.length; i++) {
+		    			listOfSongs[i].children[1].classList.add("fa-chevron-right");
+						listOfSongs[i].children[1].classList.remove("fa-pause-circle");
+		    		}*/
+			}
+
+    		stop = () => {
+    			if (player !== undefined) {
+			      player.unload();
+			    }
+			    //broke();
+    		}
+
+			for (var i = listOfSongs.length - 1; i >= 0; i--) {
+				listOfSongs[i].addEventListener("click", function () {
+					if (player !== undefined) {
+				      player.unload();
+				    }
+
+				    player = new Howl({
+				      src: ['sounds/'+tracks[this.value]]
+				      //Путь до mp3 для воспроизведения музыки
+				    });
+				    
+				      let idOfSound = player.play();
+				      //Метод экземпляра HOWL, который воспрозводит музыку
+
+						//broke();
+
+						this.querySelector("i").classList.remove("fa-chevron-right");
+						this.querySelector("i").classList.add("fa-pause-circle");
+					
+				});
+			}
+						
+		}
+	</script>
+</body>
+</html>
